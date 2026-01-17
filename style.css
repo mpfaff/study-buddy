@@ -1,15 +1,60 @@
-
-
-
-
 body {
     margin: 0;
     min-height: 125vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;   
+    position: relative;
 }
 
+/*Title*/
+.study-title {
+    margin-top: 200px;
+    text-align: center;
+}
+
+.study-title .dynamic-txt {
+    color: #000000;
+    font-size: 70px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+.study-title .dynamic-txt span {
+    position: relative;
+}
+
+.study-title .dynamic-txt span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #ffff;
+    border-left: 2px solid #000000;
+    animation: typing 1.5s steps(10) forwards, blink 0.8s infinite 3s;
+}
+
+@keyframes typing {
+    100% {
+        left: calc(100% - 2px);
+    }
+}
+
+@keyframes blink {
+    0%, 100% {
+        border-left-color: #000000;
+    }
+    50% {
+        border-left-color: transparent;
+    }
+}
+
+/*Search bar*/
+.search-container {
+    margin-top: 250px;
+    margin-bottom: auto;
+}
 
 .search {
     --padding: 14px;
