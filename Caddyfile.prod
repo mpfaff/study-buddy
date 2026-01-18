@@ -1,4 +1,4 @@
-mystudybuddy.tech {
+http://mystudybuddy.tech {
 	encode
 
 	handle /api/generate {
