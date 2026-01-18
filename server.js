@@ -7,6 +7,7 @@ createServer((req, res) => {
   });
   req.on("end", async () => {
     const query = body;
+    // we wanted to use gemini, not gemma, but got rate limited while testing
     const resp = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:streamGenerateContent?alt=sse", {
       method: "POST",
       headers: {
