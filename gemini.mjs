@@ -57,10 +57,12 @@ function renderJsonQuestionSet(set, first) {
  */
 let queryAbortController;
 
+const ABORT_REASON = {}
+
 askForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  queryAbortController?.abort();
+  queryAbortController?.abort(ABORT_REASON);
   queryAbortController = new AbortController();
   const abortSignal = queryAbortController.signal;
 
@@ -86,6 +88,7 @@ askForm.addEventListener('submit', async (e) => {
        text: askQuery.value,
       },
       {
+       // text: `Here are some sources to help you answer the question. If these sources do not contain the answer, respond with \`"unknown"\`:
        text: `Here are some sources to help you answer the question, but don't limit yourself to them:
        - https://opendatastructures.org/ods-java.pdf
        `,
@@ -118,7 +121,7 @@ askForm.addEventListener('submit', async (e) => {
     // renderJsonQuestionSet(parsed);
     delete askResult.dataset.error;
   } catch (e) {
-    if (e instanceof AbortError) return;
+    if (e.reason === ABORT_REASON) return;
     askResult.dataset.error = '';
     askResult.innerText = e.toString();
   } finally {
@@ -128,80 +131,19 @@ askForm.addEventListener('submit', async (e) => {
 
 askQuery.addEventListener('input', (e) => {
   if (e.target.value == '') {
-    queryAbortController?.abort();
+    queryAbortController?.abort(ABORT_REASON);
     askResult.replaceChildren();
   }
 })
 
 async function* askAI(abortSignal, parts) {
   // const resp = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:streamGenerateContent?alt=sse", {
-  const resp = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:streamGenerateContent?alt=sse", {
+  const resp = await fetch("http://localhost:8080", {
     method: "POST",
     headers: {
-      // "Content-Type": "application/json",
       "Content-Type": "text/event-stream",
-      "X-goog-api-key": "AIzaSyD1tkOIDeA87qy8Zf1RcjnnJhOsJnChIpg",
     },
-    body: JSON.stringify({
-     contents: [
-       {
-         parts: parts
-       }
-     ],
-     // system_instruction: {
-     //   parts: [
-     //     {
-     //       text: `Answer the question directly, without any "wrapper" text`,
-     //     },
-     //   ],
-     // },
-    //  generationConfig: {
-    //   responseMimeType: "application/json",
-    //   responseJsonSchema: {
-    //     type: "object",
-    //     required: ["answer"],
-    //     properties: {
-    //       answer: {
-    //         type: "array",
-    //         description: "The answer to the question"
-    //       },
-    //     },
-    //   }
-    // }
-    //  generationConfig: {
-    //   responseMimeType: "application/json",
-    //   responseJsonSchema: {
-    //     type: "object",
-    //     required: ["flashcards"],
-    //     properties: {
-    //       flashcards: {
-    //         type: "array",
-    //         items: {
-    //           type: "object",
-    //           required: ["question", "answer", "citations"],
-    //           properties: {
-    //             question: {
-    //               type: "string",
-    //               description: "The flashcard question"
-    //             },                
-    //             answer: {
-    //               type: "string",
-    //               description: "The flashcard answer"
-    //             },
-    //             citations: {
-    //               type: "array",
-    //               items: {
-    //                 type: "string",
-    //                 description: "The flashcard citation, in the format 'INDEX_OF_SOURCE, page PAGE_NUMBER, line LINE_NUMBER'"
-    //               }
-    //             }
-    //           },
-    //         },
-    //       },
-    //     },
-    //   }
-    // }
-   }),
+    body: JSON.stringify(parts),
    signal: abortSignal,
   });
   const reader = resp.body
@@ -221,8 +163,4 @@ async function* askAI(abortSignal, parts) {
       }
     }
   }
-
-  return 'foo';
-
-// ).json()).candidates[0].content.parts[0].text;
 }
