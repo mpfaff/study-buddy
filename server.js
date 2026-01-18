@@ -6,7 +6,7 @@ createServer((req, res) => {
     body += chunk;
   });
   req.on("end", async () => {
-    const parts = JSON.parse(body);
+    const query = body;
     const resp = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:streamGenerateContent?alt=sse", {
       method: "POST",
       headers: {
@@ -16,7 +16,34 @@ createServer((req, res) => {
       body: JSON.stringify({
         contents: [
          {
-           parts: parts,
+           parts: [
+            {
+             // text: `The user wants to learn about a topic. Please begin by summarizing the topic in up to 20 words. Answer the question directly, without any "Here is the answer" text.`,
+             // text: `The user wants to learn about a topic. Please begin by generating a simple list of questions, one per line, without list formatting. Answer the question directly, without any "Here is the answer" text.`,
+             text: `The user wants to learn about a topic. Please begin by generating a simple list of questions and answers in JSON following this format:
+             \`\`\`
+             [{"question": QUESTION, "answer": ANSWER}, ...]
+             \`\`\`
+
+             Be sure to limit your answers to at most 20 words each.`,
+            },
+            {
+             text: "The topic is:",
+            },
+            {
+             text: query,
+            },
+            {
+             // text: `Here are some sources to help you answer the question. If these sources do not contain the answer, respond with \`"unknown"\`:
+             text: `Here are some sources to help you answer the question, but don't limit yourself to them:
+             - https://opendatastructures.org/ods-java.pdf
+             `,
+             // - https://cshperspectives.cshlp.org/content/8/9/a023218.full.pdf
+             // - https://pmc.ncbi.nlm.nih.gov/articles/PMC4433171/
+             // - https://www.academia.edu/17237529/Review_Mitosis_in_Transition
+             // - https://journals.asm.org/doi/pdf/10.1128/ec.00178-07`,
+            },
+          ],
          },
        ],
       }),
