@@ -40,6 +40,7 @@ body {
 }
 
 /* Title */
+
 .study-title {
   --transition-dur: 0.1s;
 
@@ -50,8 +51,6 @@ body {
 }
 
 .study-title:has(~ #ask > #ask-result > .flashcard) {
-  /* .study-title:has(~ #ask) { */
-  /* transform: translateY(calc(-100% - 200px)); */
   transform: translateY(-100%);
   margin-top: 0;
   margin-bottom: 0;
@@ -104,7 +103,6 @@ body {
 
 .search {
   --padding: 14px;
-  /* width: max-content; */
   display: flex;
   align-items: center;
   padding: var(--padding);
@@ -133,6 +131,30 @@ body {
   flex-grow: 1;
 }
 
+.search-input::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.search-icon {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
 #ask {
   display: flex;
   flex-direction: column;
@@ -147,14 +169,6 @@ body {
     width: auto;
     align-self: stretch;
   }
-}
-
-.search-input::placeholder {
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.search-icon {
-  color: rgba(0, 0, 0, 0.7);
 }
 
 #ask-progress+#ask-result {
@@ -248,21 +262,5 @@ body {
 
   .search-input {
     font-size: 14px;
-  }
-}
-
-@keyframes shake {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-5px);
-  }
-
-  75% {
-    transform: translateX(5px);
   }
 }

@@ -87,7 +87,6 @@ askForm.addEventListener('submit', async (e) => {
     for await (const chunk of answerStream) {
       abortSignal.throwIfAborted();
       answer += chunk;
-      // askResult.innerText = answer;
       try {
         const parsed = parseIncrementalJson(answer);
         renderJsonQuestionSet(parsed, renderedCount);
@@ -98,11 +97,6 @@ askForm.addEventListener('submit', async (e) => {
       }
     }
     abortSignal.throwIfAborted();
-    // if (!answer.startsWith(JSON_CODE_FENCE_PREFIX) || !answer.endsWith(JSON_CODE_FENCE_SUFFIX)) {
-    //   throw new Error("Invalid JSON response from model");
-    // }
-    // const parsed = parseIncrementalJson(answer);
-    // renderJsonQuestionSet(parsed);
     delete askResult.dataset.error;
   } catch (e) {
     if (e.reason === ABORT_REASON) return;
@@ -121,7 +115,6 @@ askQuery.addEventListener('input', (e) => {
 })
 
 async function* askAI(abortSignal, query) {
-  // const resp = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:streamGenerateContent?alt=sse", {
   const resp = await fetch("/api/generate", {
     method: "POST",
     headers: {
