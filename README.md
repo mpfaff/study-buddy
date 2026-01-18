@@ -1,3 +1,3 @@
-# scholar-buddy
+# Study Buddy
 
 sup
