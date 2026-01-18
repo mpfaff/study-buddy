@@ -1,4 +1,4 @@
-http://mystudybuddy.tech {
+http://mystudybuddy.tech, http://study-buddy.koyeb.app {
 	encode
 
 	handle /api/generate {
