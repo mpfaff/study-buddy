@@ -1,0 +1,13 @@
+mystudybuddy.tech {
+	encode
+
+	handle /api/generate {
+		reverse_proxy http://localhost:8080
+	}
+
+	handle {
+		root * /www
+		try_files {path} /index.html
+		file_server
+	}
+}

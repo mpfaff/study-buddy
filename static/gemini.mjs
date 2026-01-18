@@ -149,7 +149,7 @@ askQuery.addEventListener('input', (e) => {
 
 async function* askAI(abortSignal, parts) {
   // const resp = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:streamGenerateContent?alt=sse", {
-  const resp = await fetch("http://localhost:8080", {
+  const resp = await fetch("/api/generate", {
     method: "POST",
     headers: {
       "Content-Type": "text/event-stream",
