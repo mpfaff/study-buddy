@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <!-- Research Citation Thingy-->
 <html lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, user-scalable=yes">
-        <title>Study Buddy</title>
-        <link rel="stylesheet" href="style.css" />
-        <script src="script.js"></script>
-    </head>
-    <body>
-        <div class="study-title">
-            <div class="dynamic-txt">
-                <span>Study Buddy</span>
-            </div>
-        </div>
-        <div id="ask">
-            <form class="search">
-                <span class="search-icon material-symbols-outlined">search</span>
-                <input id="ask-query" class="search-input" type="search" placeholder="What do you want to learn about?">
-            </form>
 
-            <div id="ask-result">
-            <!-- <div class="flashcard">Dummy</div> -->
-            </div>
+<head>
+  <meta name="viewport" content="width=device-width, user-scalable=yes">
+  <title>Study Buddy</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+</head>
 
-            <div id="ask-progress" style="display: none">
-                Thinking...
-            </div>
-        </div>
+<body>
+  <div class="study-title">
+    <div class="dynamic-txt">
+      <span>Study Buddy</span>
+    </div>
+  </div>
+  <div id="ask">
+    <form class="search">
+      <span class="search-icon material-symbols-outlined">search</span>
+      <input id="ask-query" class="search-input" type="search" placeholder="What do you want to learn about?">
+    </form>
 
-        <script src="gemini.mjs" type="module"></script>
-    </body>
+    <div id="ask-result">
+      <!-- <div class="flashcard">Dummy</div> -->
+    </div>
+
+    <div id="ask-progress" style="display: none">
+      Thinking...
+    </div>
+  </div>
+
+  <script src="gemini.mjs" type="module"></script>
+</body>
+
 </html>

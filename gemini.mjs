@@ -62,6 +62,17 @@ const ABORT_REASON = {}
 askForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
+  const query = askQuery.value.trim();
+  if (!query) {
+    // Shake animation for empty input
+    askQuery.style.animation = 'shake 0.5s';
+    setTimeout(() => {
+        askQuery.style.animation = '';
+    }, 500);
+    askResult.replaceChildren();
+    return;
+  }
+
   queryAbortController?.abort(ABORT_REASON);
   queryAbortController = new AbortController();
   const abortSignal = queryAbortController.signal;
@@ -85,7 +96,7 @@ askForm.addEventListener('submit', async (e) => {
        text: "The topic is:",
       },
       {
-       text: askQuery.value,
+       text: query,
       },
       {
        // text: `Here are some sources to help you answer the question. If these sources do not contain the answer, respond with \`"unknown"\`:
